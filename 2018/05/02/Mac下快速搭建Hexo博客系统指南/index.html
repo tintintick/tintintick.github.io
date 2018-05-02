@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="环境准备 github注册和新建博客代码仓库  注册地址  新建博客代码仓库 仓库名称和github用户名相同，然后添加github.io，如your_name.github.io，因为我已经创建好了仓库，所以就显示仓库名已存在。       配置SSH 为了方便的将本地文件同步到github仓库，需要本地生成公钥文件，并在github中添加公钥，具体步骤如下：  新建公钥  1234ssh-ke">
+<meta name="keywords" content="Hexo,NexT,github,博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac下快速搭建Hexo博客系统指南">
+<meta property="og:url" content="http://yoursite.com/2018/05/02/Mac下快速搭建Hexo博客系统指南/index.html">
+<meta property="og:site_name" content="洗象池">
+<meta property="og:description" content="环境准备 github注册和新建博客代码仓库  注册地址  新建博客代码仓库 仓库名称和github用户名相同，然后添加github.io，如your_name.github.io，因为我已经创建好了仓库，所以就显示仓库名已存在。       配置SSH 为了方便的将本地文件同步到github仓库，需要本地生成公钥文件，并在github中添加公钥，具体步骤如下：  新建公钥  1234ssh-ke">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/Users/Eric/Desktop/my_blog/source/_posts/Mac下快速搭建Hexo博客系统指南/create_repository.jpg">
+<meta property="og:image" content="http://yoursite.com/Users/Eric/Desktop/my_blog/source/_posts/Mac下快速搭建Hexo博客系统指南/add_new.png">
+<meta property="og:image" content="http://yoursite.com/Users/Eric/Desktop/my_blog/source/_posts/Mac下快速搭建Hexo博客系统指南/clone_link.png">
+<meta property="og:updated_time" content="2018-05-02T14:26:26.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac下快速搭建Hexo博客系统指南">
+<meta name="twitter:description" content="环境准备 github注册和新建博客代码仓库  注册地址  新建博客代码仓库 仓库名称和github用户名相同，然后添加github.io，如your_name.github.io，因为我已经创建好了仓库，所以就显示仓库名已存在。       配置SSH 为了方便的将本地文件同步到github仓库，需要本地生成公钥文件，并在github中添加公钥，具体步骤如下：  新建公钥  1234ssh-ke">
+<meta name="twitter:image" content="http://yoursite.com/Users/Eric/Desktop/my_blog/source/_posts/Mac下快速搭建Hexo博客系统指南/create_repository.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/02/Mac下快速搭建Hexo博客系统指南/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Mac下快速搭建Hexo博客系统指南 | 洗象池</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">洗象池</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">水至清则无鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />Tags</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/Mac下快速搭建Hexo博客系统指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eric Chan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="洗象池">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mac下快速搭建Hexo博客系统指南
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-05-02 21:20:18 / Modified: 22:26:26" itemprop="dateCreated datePublished" datetime="2018-05-02T21:20:18+08:00">2018-05-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/实用技术/" itemprop="url" rel="index"><span itemprop="name">实用技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul>
+<li><p>github注册和新建博客代码仓库</p>
+<ul>
+<li><p><a href="https://github.com" target="_blank" rel="noopener">注册地址</a></p>
+</li>
+<li><p>新建博客代码仓库</p>
+<p>仓库名称和github用户名相同，然后添加<code>github.io</code>，如<code>your_name.github.io</code>，因为我已经创建好了仓库，所以就显示仓库名已存在。</p>
+</li>
+</ul>
+<p><img src="/Users/Eric/Desktop/my_blog/source/_posts/Mac下快速搭建Hexo博客系统指南/create_repository.jpg" alt="create_repository"></p>
+</li>
+</ul>
+<ul>
+<li><p>配置SSH</p>
+<p>为了方便的将本地文件同步到github仓库，需要本地生成公钥文件，并在github中添加公钥，具体步骤如下：</p>
+<ul>
+<li>新建公钥</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C "你的github邮箱地址" </span><br><span class="line"><span class="meta">#</span> 中间会提示密钥文件保存路径和为密钥文件添加口令，可以一路回车直接跳过</span><br><span class="line"><span class="meta">#</span> 完成之后会提示如下信息</span><br><span class="line">Your public key has been saved in Users/user/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>新建SSH key</p>
+<p>github上访问<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH and GPG keys</a>，点击<code>New SSH key</code>，将公钥文件id_rsa.pub的内容拷贝到下图<code>Key</code>文本框中。</p>
+</li>
+</ul>
+<p><img src="/Users/Eric/Desktop/my_blog/source/_posts/Mac下快速搭建Hexo博客系统指南/add_new.png" alt="add_new"></p>
+</li>
+<li><p>本地安装git和nodejs环境</p>
+<ul>
+<li><p>安装git</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew install git</span><br><span class="line"><span class="meta">#</span> 安装完成后配置github信息</span><br><span class="line">git config --global user.name "github用户名"</span><br><span class="line">git config --global user.email "github邮箱"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装node</p>
+<p>建议使用<code>nvm</code>（node version manager）来安装和管理node环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">brew install nvm # 安装nvm管理器</span><br><span class="line">nvm install stable # 使用nvm安装稳定版本的node</span><br><span class="line">nvm ls # 查看已安装node环境</span><br><span class="line">nvm use stable # 将当前node环境设置为stable版本</span><br><span class="line">node -v # 查看node版本</span><br><span class="line">npm -v # 查看npm版本</span><br><span class="line">npm install -g nrm # 全局安装nrm管理器，用于快速切换npm源</span><br><span class="line">nrm ls # 查看可用npm源</span><br><span class="line">nrm test cnpm # or taobao 测试npm源速度</span><br><span class="line">nrm use taobao # 使用淘宝源</span><br></pre></td></tr></table></figure>
+<p>补充：<a href="https://blog.csdn.net/qq_27626333/article/details/77857223" target="_blank" rel="noopener">nrm、nvm、npm三者详解</a></p>
+</li>
+</ul>
+</li>
+<li><p>本地安装Hexo博客环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli # 全局安装hexo-cli</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化Hexo，并绑定github仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init your_blog_dir_name # 在当前路径下生成包含Hexo博客系统的目录</span><br><span class="line">cd your_blog_dir_name # 进入博客目录</span><br></pre></td></tr></table></figure>
+<p><img src="/Users/Eric/Desktop/my_blog/source/_posts/Mac下快速搭建Hexo博客系统指南/clone_link.png" alt="clone_link"></p>
+<p>从上图中获取到github博客仓库的SSH地址，在hexo进行绑定</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim _config.yml # 打开hexo配置文件，这里使用vim，可用任意编辑器打开</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 在_config.yml文件中找到以下内容，添加并保存</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:tintintick/tintintick.github.io.git # 将上图获取的SSH地址复制到这里</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><p>写作和发布</p>
+<p>hexo n “new_post”</p>
+<p>hexo clean<br>hexo g<br>hexo s</p>
+<p>hexo clean<br>hexo d -g</p>
+<h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><p>post_asset_folder: true</p>
+<h3 id="更改主题"><a href="#更改主题" class="headerlink" title="更改主题"></a>更改主题</h3><ul>
+<li><p>主题：</p>
+</li>
+<li><p><a href="https://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">NexT主题配置文档</a></p>
+</li>
+<li><p><a href="https://theme-next.org/" target="_blank" rel="noopener">https://theme-next.org/</a></p>
+</li>
+<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>评论</p>
+</li>
+<li><p>​</p>
+</li>
+<li><p>目录</p>
+</li>
+</ul>
+<h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><ul>
+<li>hexo找不到，是因为环境的问题</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/NexT/" rel="tag"># NexT</a>
+          
+            <a href="/tags/github/" rel="tag"># github</a>
+          
+            <a href="/tags/博客/" rel="tag"># 博客</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/02/cross-validation/" rel="next" title="cross validation">
+                <i class="fa fa-chevron-left"></i> cross validation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/02/test/" rel="prev" title="test">
+                test <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Eric Chan</p>
+              <p class="site-description motion-element" itemprop="description">客官来玩啊</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础命令"><span class="nav-number">2.</span> <span class="nav-text">基础命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础配置"><span class="nav-number">3.</span> <span class="nav-text">基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改主题"><span class="nav-number">4.</span> <span class="nav-text">更改主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定域名"><span class="nav-number">5.</span> <span class="nav-text">绑定域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">6.</span> <span class="nav-text">其他问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric Chan</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.2.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
