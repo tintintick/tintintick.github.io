@@ -475,7 +475,7 @@
                 
               
 
-              <time title="Created: 2018-05-02 21:20:18 / Modified: 23:01:27" itemprop="dateCreated datePublished" datetime="2018-05-02T21:20:18+08:00">2018-05-02</time>
+              <time title="Created: 2018-05-02 21:20:18 / Modified: 23:05:01" itemprop="dateCreated datePublished" datetime="2018-05-02T21:20:18+08:00">2018-05-02</time>
             
 
             
@@ -540,9 +540,9 @@
 </li>
 <li><p>新建博客代码仓库</p>
 <p>仓库名称和github用户名相同，然后添加<code>github.io</code>，如<code>your_name.github.io</code>，因为我已经创建好了仓库，所以就显示仓库名已存在。</p>
+<img src="/2018/05/02/Mac下快速搭建Hexo博客系统指南/create_repository.jpg">
 </li>
 </ul>
-<p><img src="create_repository.jpg" alt="create_repository"></p>
 </li>
 </ul>
 <ul>
@@ -555,9 +555,9 @@
 <ul>
 <li><p>新建SSH key</p>
 <p>github上访问<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH and GPG keys</a>，点击<code>New SSH key</code>，将公钥文件id_rsa.pub的内容拷贝到下图<code>Key</code>文本框中。</p>
+<img src="/2018/05/02/Mac下快速搭建Hexo博客系统指南/add_new.png">
 </li>
 </ul>
-<p><img src="add_new.png" alt="add_new"></p>
 </li>
 <li><p>本地安装git和nodejs环境</p>
 <ul>
@@ -576,7 +576,7 @@
 </li>
 <li><p>初始化Hexo，并绑定github仓库</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init your_blog_dir_name # 在当前路径下生成包含Hexo博客系统的目录</span><br><span class="line">cd your_blog_dir_name # 进入博客目录</span><br></pre></td></tr></table></figure>
-<p><img src="clone_link.png" alt="clone_link"></p>
+<img src="/2018/05/02/Mac下快速搭建Hexo博客系统指南/clone_link.png">
 <p>从上图中获取到github博客仓库的SSH地址，在hexo进行绑定</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim _config.yml # 打开hexo配置文件，这里使用vim，可用任意编辑器打开</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 在_config.yml文件中找到以下内容，添加并保存</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:tintintick/tintintick.github.io.git # 将上图获取的SSH地址复制到这里</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 </li>
