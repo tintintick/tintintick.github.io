@@ -102,18 +102,22 @@
 
 
 
-  <meta name="description" content="交叉验证法，cross validation 1.交叉验证是一种模型评估方法 留一法，Leave one out 训练时间太长  k折，K-fold k折的话是训练了k个不同的模型，而不是对一个模型迭代k次，如果是回归任务，那么整体误差就是k个模型误差的均值。   LOOCV是特殊的K-fold CV，当N=K时，二者相同。k的选取也很有讲究，k越大，在训练集上的Bias就会越小，但训练集越大会导">
-<meta name="keywords" content="cross validation">
+  <meta name="description" content="交叉验证是什么？Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：  k折，K-fold k折交叉验证是最基本的cv方法，具体方法为，将训练集随机等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每">
+<meta name="keywords" content="机器学习,CV">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cross validation">
+<meta property="og:title" content="cross validation - 机器学习中的交叉验证法探究">
 <meta property="og:url" content="http://yoursite.com/2018/05/02/cross-validation/index.html">
 <meta property="og:site_name" content="洗象池">
-<meta property="og:description" content="交叉验证法，cross validation 1.交叉验证是一种模型评估方法 留一法，Leave one out 训练时间太长  k折，K-fold k折的话是训练了k个不同的模型，而不是对一个模型迭代k次，如果是回归任务，那么整体误差就是k个模型误差的均值。   LOOCV是特殊的K-fold CV，当N=K时，二者相同。k的选取也很有讲究，k越大，在训练集上的Bias就会越小，但训练集越大会导">
+<meta property="og:description" content="交叉验证是什么？Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：  k折，K-fold k折交叉验证是最基本的cv方法，具体方法为，将训练集随机等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-02T09:53:47.382Z">
+<meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/cv.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/holdout.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/nested_cv.png">
+<meta property="og:updated_time" content="2018-05-03T07:35:54.639Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cross validation">
-<meta name="twitter:description" content="交叉验证法，cross validation 1.交叉验证是一种模型评估方法 留一法，Leave one out 训练时间太长  k折，K-fold k折的话是训练了k个不同的模型，而不是对一个模型迭代k次，如果是回归任务，那么整体误差就是k个模型误差的均值。   LOOCV是特殊的K-fold CV，当N=K时，二者相同。k的选取也很有讲究，k越大，在训练集上的Bias就会越小，但训练集越大会导">
+<meta name="twitter:title" content="cross validation - 机器学习中的交叉验证法探究">
+<meta name="twitter:description" content="交叉验证是什么？Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：  k折，K-fold k折交叉验证是最基本的cv方法，具体方法为，将训练集随机等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/02/cross-validation/cv.png">
 
 
 
@@ -130,7 +134,7 @@
   };
 </script>
 
-  <title>cross validation | 洗象池</title>
+  <title>cross validation - 机器学习中的交叉验证法探究 | 洗象池</title>
   
 
 
@@ -225,6 +229,14 @@
         
         
           
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
@@ -299,7 +311,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eric Chan">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/doggy.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -311,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">cross validation
+          <h1 class="post-title" itemprop="name headline">cross validation - 机器学习中的交叉验证法探究
               
             
           </h1>
@@ -336,16 +348,46 @@
                 
               
 
-              <time title="Created: 2018-05-02 17:31:20 / Modified: 17:53:47" itemprop="dateCreated datePublished" datetime="2018-05-02T17:31:20+08:00">2018-05-02</time>
+              <time title="Created: 2018-05-02 17:31:20" itemprop="dateCreated datePublished" datetime="2018-05-02T17:31:20+08:00">2018-05-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-03 15:35:54" itemprop="dateModified" datetime="2018-05-03T15:35:54+08:00">2018-05-03</time>
               
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -374,37 +416,40 @@
       
 
       
-        <p>交叉验证法，cross validation</p>
-<h2 id="1-交叉验证是一种模型评估方法"><a href="#1-交叉验证是一种模型评估方法" class="headerlink" title="1.交叉验证是一种模型评估方法"></a>1.交叉验证是一种<strong>模型评估方法</strong></h2><ul>
-<li><p>留一法，Leave one out</p>
-<p>训练时间太长</p>
-</li>
+        <h3 id="交叉验证是什么？"><a href="#交叉验证是什么？" class="headerlink" title="交叉验证是什么？"></a>交叉验证是什么？</h3><p>Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：</p>
+<ul>
 <li><p>k折，K-fold</p>
-<p>k折的话是训练了k个不同的模型，而不是对一个模型迭代k次，如果是回归任务，那么整体误差就是k个模型误差的均值。</p>
+<p>k折交叉验证是最基本的cv方法，具体方法为，将训练集<strong>随机</strong>等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每次都取一份不同的子集为验证集，最终得到k个不同的模型（不是对一个模型迭代k次）和k个评分，综合这k个模型的表现（平均得分或其他）评估模型在当前问题中的优劣。</p>
+<img src="/2018/05/02/cross-validation/cv.png">
+<p>k值的选取很有讲究，k越大，在训练集上的Bias就会越小，但训练集越大会导致Variance越大，同时花费的时间越长，所以选取适当大小的k很重要，经验值（empirical value）是k=10。</p>
+</li>
+<li><p>留一法，Leave one out（LOO）</p>
+<p>留一法每次在训练集的N个样本中选一个不同的样本作为验证集，其余样本为训练集，训练得到N-1个不同的模型。LOOCV是特殊的K-fold，当K=N时，二者相同。</p>
+</li>
+<li><p>还有一种叫holdout，其实算不上真正的cv，流程图如下</p>
+<img src="/2018/05/02/cross-validation/holdout.png">
+<p>这种方法受数据集分割方式的影响较大，不能较为客观的反映出模型的优劣。</p>
 </li>
 </ul>
-<p>LOOCV是特殊的K-fold CV，当N=K时，二者相同。k的选取也很有讲究，k越大，在训练集上的Bias就会越小，但训练集越大会导致Variance越大，同时花费的事件越长，所以选取适当大小的k很重要，经验值是k=10</p>
-<p>问题：</p>
-<p>CV的模型为什么要先经过训练？</p>
-<p>从查到的资料来看，是不能预先训练的；</p>
-<p>CV是否输出模型？</p>
-<p>交叉验证并非用于建立具体模型，而是用于模型选择（model selection），判断哪个模型在当前问题上表现更好，当选定模型后，需要在<strong>全部训练集上重新训练模型</strong>；</p>
-<p>CV过程中为什么要重新训练模型？</p>
-<p>每次迭代都要产生一个新的模型，而不是在上一次训练的基础上再训练，即k折交叉验证就要产生k个不同的参数的模型（如参数不同的线性回归模型，模型类别是相同的）。</p>
-<p>CV和网格搜索？</p>
-<p>GridSearchCV是为了得到超参数（hyper parameter）最优组合，GridSearchCV中的cv参数是利用交叉验证为某一超参数组合打出合理的评分。通过best_estimator_可以获取到最优模型，best_params_可以获得最优超参数组合。GridSearchCV的fit应该是用CV选出最优超参数组合，然后使用全部训练集和这个组合训练得到最优模型，可以直接predict。</p>
-<p><a href="https://stats.stackexchange.com/questions/52274/how-to-choose-a-predictive-model-after-k-fold-cross-validation" target="_blank" rel="noopener">真正把CV模型的问题讲清楚了的答案</a></p>
-<p><a href="https://www.bilibili.com/video/av10574659/" target="_blank" rel="noopener">CV和GridSearchCV视频</a></p>
-<p>另外有种说法是交叉验证过程中会产生最优参数模型（k个中误差最小的那个），然后用这套参数在全部训练集上训练出新的参数，再拿到测试集上测试。这个模型如果不做任何初始处理直接在全量训练集上训练，得到的结果是一样的么？</p>
-<h2 id="2-为什么需要cv？"><a href="#2-为什么需要cv？" class="headerlink" title="2.为什么需要cv？"></a>2.为什么需要cv？</h2><p>在训练集（train set）上训练得到的模型表现良好，但在测试集（test set）的预测结果不尽如人意，这就说明模型可能出现了过拟合（overfitting），bias低而variance高，在未知数据上的泛化能力差。</p>
+<h3 id="为什么需要cv？"><a href="#为什么需要cv？" class="headerlink" title="为什么需要cv？"></a>为什么需要cv？</h3><p>在训练集（train set）上训练得到的模型表现良好，但在测试集（test set）的预测结果不尽如人意，这就说明模型可能出现了过拟合（overfitting），bias低而variance高，在未知数据上的泛化能力差。</p>
 <p>一个改进方案是，在训练集的基础上进一步划分出新的训练集和验证集（validate set），在新训练集训练模型，在验证集测试模型，不断调整初始模型（超参数等），使得训练得到的模型在验证集上的表现最好，最后放到测试集上得到这个最优模型的评估结果。</p>
 <p>这个方案的问题在于模型的表现依赖于验证集的划分，可能使某些特殊样本被划入验证集，导致模型的表现出现异常（偏好或偏差）。而且训练集划了一部分给验证集后，训练模型能得到的数据就变少了，也会影响训练效果。因为通常来说，训练数据越多，越能反映出数据的真实分布，模型训练的效果就越好，越可能得到无偏估计。</p>
-<p>交叉验证就应运而生了。以最基础的k折交叉验证为例，将训练集等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每次都取一份不同的子集为验证集，最终得到k个不同的模型和k个评分，综合这k个模型的表现（平均得分或其他）评估模型在当前问题中的优劣，用于初始模型的选择。交叉验证可以充分使用所有的训练数据用于评估模型。</p>
-<p>为什么不使用cv过程中产生的最优模型？</p>
-<p>中间模型的最小误差只是表面现象，并不代表它就是最优的，因为只使用了一部分数据进行训练，且验证集的划分也不一定客观。</p>
-<p>那么就出现了嵌套交叉验证</p>
-<p>内层交叉验证+外层交叉验证（数据驱动）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+<p>交叉验证思想应运而生，交叉验证可以充分使用所有的训练数据用于评估模型。</p>
+<h3 id="嵌套交叉验证？"><a href="#嵌套交叉验证？" class="headerlink" title="嵌套交叉验证？"></a>嵌套交叉验证？</h3><p>嵌套交叉验证（Nested Cross Validation）第一次看到是在”Python Machine Learning 2nd Edition”（Sebastian Raschka）这本书中，说要将调参和模型选择结合起来比较好的方式是嵌套交叉验证，其挑选的模型在训练集和测试集上的误差估计几乎没有出入。（原文：the true error of the estimate is almost unbiased relative to the test set when nested cross-validation is used）</p>
+<p>嵌套交叉验证流程图如下（也被称作5*2 cross-validation）：</p>
+<img src="/2018/05/02/cross-validation/nested_cv.png">
+<ul>
+<li>内层交叉验证（innner loop）：用于模型选择，可以进行特征工程处理数据。</li>
+<li>外层交叉验证（outer loop）：用于模型评估，使用所有数据集进行分割，而不仅是训练集，且用Stratified K-Fold保证类别比例不变。外层每一折都使用内层得到的最优参数组合进行训练。</li>
+<li>演示代码：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gs = GridSearchCV(estimator=pipe_svc, ... param_grid=param_grid, ... scoring=<span class="string">'accuracy'</span>, ... cv=<span class="number">2</span>)</span><br><span class="line">scores = cross_val_score(gs, X_train, y_train, ... scoring=<span class="string">'accuracy'</span>, cv=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p>嵌套交叉验证可以看做是GridSearchCV的升级版，普通GridSearchCV训练的模型只在一部分数据上进行测试，而嵌套交叉验证可以使模型在全部数据上进行测试，能更好的说明模型的泛化能力。</p>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="CV的模型是否要先经过训练？"><a href="#CV的模型是否要先经过训练？" class="headerlink" title="CV的模型是否要先经过训练？"></a>CV的模型是否要先经过训练？</h4><p>之前在”Hands-On Machine Learning with Scikit-Learn and TensorFlow” - Chapter3. Classification - Measuring Accuracy Using Cross-Validation中（Page83）看到，笔者在cv的时候使用了之前在全量训练集上训练过的模型作为了cv的初始模型<code>clone_clf = clone(sgd_clf)</code>，个人觉得这里有点问题，从多方查到的资料来看，初始模型是不能预先训练的，至多传入超参数组合。</p>
+<h4 id="CV是否输出模型？"><a href="#CV是否输出模型？" class="headerlink" title="CV是否输出模型？"></a>CV是否输出模型？</h4><p>交叉验证并非用于建立具体模型，而是用于模型选择（model selection），cv中间过程产生的误差最小的模型并不一定是最优的，可能只是表面现象，因为只使用了一部分数据进行训练模型，且验证集的划分也不一定客观。。当选定模型后，需要在<strong>全部训练集上重新训练模型</strong>；为什么不使用cv过程中产生的最优模型？</p>
+<h4 id="CV和网格搜索？"><a href="#CV和网格搜索？" class="headerlink" title="CV和网格搜索？"></a>CV和网格搜索？</h4><p>scikit learn库中的GridSearchCV可以方便地尝试不同的超参数（hyper parameter），得到最优组合。GridSearchCV中的cv参数（默认为3-fold）利用交叉验证为某一超参数组合打出合理的评分。GridSearchCV可以得到最优模型，通过best_estimator_查看，best_params_可以查看最优超参数组合。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://stats.stackexchange.com/questions/52274/how-to-choose-a-predictive-model-after-k-fold-cross-validation" target="_blank" rel="noopener">1. 真正把CV模型的问题讲清楚了的答案</a></p>
+<p><a href="https://www.bilibili.com/video/av10574659/" target="_blank" rel="noopener">2. CV和GridSearchCV视频</a></p>
 
       
     </div>
@@ -425,7 +470,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/cross-validation/" rel="tag"># cross validation</a>
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/CV/" rel="tag"># CV</a>
           
         </div>
       
@@ -444,7 +491,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/02/Mac下快速搭建Hexo博客系统指南/" rel="prev" title="Mac下快速搭建Hexo博客系统指南">
+              <a href="/2018/05/02/build-hexo-blog-in-macos/" rel="prev" title="Mac下快速搭建Hexo博客系统指南">
                 Mac下快速搭建Hexo博客系统指南 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -509,6 +556,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/images/doggy.jpg"
+                alt="Eric Chan" />
+            
               <p class="site-author-name" itemprop="name">Eric Chan</p>
               <p class="site-description motion-element" itemprop="description">客官来玩啊</p>
           </div>
@@ -520,7 +571,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -535,7 +586,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">categories</span>
                   
                 </div>
@@ -558,7 +611,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -594,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-交叉验证是一种模型评估方法"><span class="nav-number">1.</span> <span class="nav-text">1.交叉验证是一种模型评估方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-为什么需要cv？"><span class="nav-number">2.</span> <span class="nav-text">2.为什么需要cv？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉验证是什么？"><span class="nav-number">1.</span> <span class="nav-text">交叉验证是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要cv？"><span class="nav-number">2.</span> <span class="nav-text">为什么需要cv？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套交叉验证？"><span class="nav-number">3.</span> <span class="nav-text">嵌套交叉验证？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见问题"><span class="nav-number">4.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CV的模型是否要先经过训练？"><span class="nav-number">4.1.</span> <span class="nav-text">CV的模型是否要先经过训练？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CV是否输出模型？"><span class="nav-number">4.2.</span> <span class="nav-text">CV是否输出模型？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CV和网格搜索？"><span class="nav-number">4.3.</span> <span class="nav-text">CV和网格搜索？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
@@ -603,7 +658,6 @@
       
 
       
-
     </div>
   </aside>
 
