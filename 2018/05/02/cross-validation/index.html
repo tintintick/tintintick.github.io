@@ -113,7 +113,8 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/cv.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/holdout.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/nested_cv.png">
-<meta property="og:updated_time" content="2018-05-03T07:50:02.842Z">
+<meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/nested_vs_non.png">
+<meta property="og:updated_time" content="2018-05-03T08:22:40.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cross validation - 机器学习中的交叉验证法探究">
 <meta name="twitter:description" content="交叉验证是什么？Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：  k折，K-fold k折交叉验证是最基本的cv方法，具体方法为，将训练集随机等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每">
@@ -365,7 +366,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-05-03 15:50:02" itemprop="dateModified" datetime="2018-05-03T15:50:02+08:00">2018-05-03</time>
+                <time title="Modified: 2018-05-03 16:22:40" itemprop="dateModified" datetime="2018-05-03T16:22:40+08:00">2018-05-03</time>
               
             
           </span>
@@ -454,11 +455,13 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gs = GridSearchCV(estimator=pipe_svc, ... param_grid=param_grid, ... scoring=<span class="string">'accuracy'</span>, ... cv=<span class="number">2</span>)</span><br><span class="line">scores = cross_val_score(gs, X_train, y_train, ... scoring=<span class="string">'accuracy'</span>, cv=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
 <p>嵌套交叉验证可以看做是GridSearchCV的升级版，普通GridSearchCV训练的模型只在一部分数据上进行测试，而嵌套交叉验证可以使模型在全部数据上进行测试，能更好的说明模型的泛化能力。</p>
+<img src="/2018/05/02/cross-validation/nested_vs_non.png">
 <h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="CV的模型是否要先经过训练？"><a href="#CV的模型是否要先经过训练？" class="headerlink" title="CV的模型是否要先经过训练？"></a>CV的模型是否要先经过训练？</h4><p>之前在”Hands-On Machine Learning with Scikit-Learn and TensorFlow” - Chapter3. Classification - Measuring Accuracy Using Cross-Validation中（Page83）看到，笔者在cv的时候使用了之前在全量训练集上训练过的模型作为了cv的初始模型<code>clone_clf = clone(sgd_clf)</code>，个人觉得这里有点问题，从多方查到的资料来看，初始模型是不能预先训练的，至多传入超参数组合。</p>
 <h4 id="CV是否输出模型？"><a href="#CV是否输出模型？" class="headerlink" title="CV是否输出模型？"></a>CV是否输出模型？</h4><p>交叉验证并非用于建立具体模型，而是用于模型选择（model selection），cv中间过程产生的误差最小的模型并不一定是最优的，可能只是表面现象，因为只使用了一部分数据进行训练模型，且验证集的划分也不一定客观。。当选定模型后，需要在<strong>全部训练集上重新训练模型</strong>；为什么不使用cv过程中产生的最优模型？</p>
 <h4 id="CV和网格搜索？"><a href="#CV和网格搜索？" class="headerlink" title="CV和网格搜索？"></a>CV和网格搜索？</h4><p>scikit learn库中的GridSearchCV可以方便地尝试不同的超参数（hyper parameter），得到最优组合。GridSearchCV中的cv参数（默认为3-fold）利用交叉验证为某一超参数组合打出合理的评分。GridSearchCV可以得到最优模型，通过best_estimator_查看，best_params_可以查看最优超参数组合。</p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://stats.stackexchange.com/questions/52274/how-to-choose-a-predictive-model-after-k-fold-cross-validation" target="_blank" rel="noopener">1. 真正把CV模型的问题讲清楚了的答案</a></p>
 <p><a href="https://www.bilibili.com/video/av10574659/" target="_blank" rel="noopener">2. CV和GridSearchCV视频</a></p>
+<p><a href="http://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html" target="_blank" rel="noopener">3. 普通交叉验证和嵌套交叉验证比较</a></p>
 
       
     </div>
