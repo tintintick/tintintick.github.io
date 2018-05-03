@@ -113,7 +113,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/cv.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/holdout.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/02/cross-validation/nested_cv.png">
-<meta property="og:updated_time" content="2018-05-03T07:35:54.639Z">
+<meta property="og:updated_time" content="2018-05-03T07:50:02.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cross validation - 机器学习中的交叉验证法探究">
 <meta name="twitter:description" content="交叉验证是什么？Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：  k折，K-fold k折交叉验证是最基本的cv方法，具体方法为，将训练集随机等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每">
@@ -365,7 +365,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-05-03 15:35:54" itemprop="dateModified" datetime="2018-05-03T15:35:54+08:00">2018-05-03</time>
+                <time title="Modified: 2018-05-03 15:50:02" itemprop="dateModified" datetime="2018-05-03T15:50:02+08:00">2018-05-03</time>
               
             
           </span>
@@ -429,6 +429,7 @@
 <li><p>还有一种叫holdout，其实算不上真正的cv，流程图如下</p>
 <img src="/2018/05/02/cross-validation/holdout.png">
 <p>这种方法受数据集分割方式的影响较大，不能较为客观的反映出模型的优劣。</p>
+<a id="more"></a>
 </li>
 </ul>
 <h3 id="为什么需要cv？"><a href="#为什么需要cv？" class="headerlink" title="为什么需要cv？"></a>为什么需要cv？</h3><p>在训练集（train set）上训练得到的模型表现良好，但在测试集（test set）的预测结果不尽如人意，这就说明模型可能出现了过拟合（overfitting），bias低而variance高，在未知数据上的泛化能力差。</p>

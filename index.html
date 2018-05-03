@@ -365,7 +365,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-05-03 14:58:10" itemprop="dateModified" datetime="2018-05-03T14:58:10+08:00">2018-05-03</time>
+                <time title="Modified: 2018-05-03 15:51:43" itemprop="dateModified" datetime="2018-05-03T15:51:43+08:00">2018-05-03</time>
               
             
           </span>
@@ -424,20 +424,6 @@
 <li><p>新建博客代码仓库</p>
 <p>仓库名称和github用户名相同，然后添加<code>github.io</code>，如<code>your_name.github.io</code>，因为我已经创建好了仓库，所以就显示仓库名已存在。</p>
 <img src="/2018/05/02/build-hexo-blog-in-macos/create_repository.jpg">
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><h4 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h4><p>为了方便的将本地文件同步到github仓库，需要本地生成公钥文件，并在github中添加公钥，具体步骤如下：</p>
-<ul>
-<li>新建公钥</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C "你的github邮箱地址" </span><br><span class="line"><span class="meta">#</span> 中间会提示密钥文件保存路径和为密钥文件添加口令，可以一路回车直接跳过</span><br><span class="line"><span class="meta">#</span> 完成之后会提示如下信息</span><br><span class="line">Your public key has been saved in Users/user/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>新建SSH key</p>
-<p>github上访问<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH and GPG keys</a>，点击<code>New SSH key</code>，将公钥文件id_rsa.pub的内容拷贝到下图<code>Key</code>文本框中。</p>
-<img src="/2018/05/02/build-hexo-blog-in-macos/add_new.png">
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/05/02/build-hexo-blog-in-macos/#more" rel="contents">
@@ -559,7 +545,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-05-03 15:35:54" itemprop="dateModified" datetime="2018-05-03T15:35:54+08:00">2018-05-03</time>
+                <time title="Modified: 2018-05-03 15:50:02" itemprop="dateModified" datetime="2018-05-03T15:50:02+08:00">2018-05-03</time>
               
             
           </span>
@@ -611,8 +597,7 @@
 
       
         
-          
-            <h3 id="交叉验证是什么？"><a href="#交叉验证是什么？" class="headerlink" title="交叉验证是什么？"></a>交叉验证是什么？</h3><p>Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：</p>
+          <h3 id="交叉验证是什么？"><a href="#交叉验证是什么？" class="headerlink" title="交叉验证是什么？"></a>交叉验证是什么？</h3><p>Cross Validation是一种评估模型性能的重要方法，主要用于在多个模型中（不同种类模型或同一种类不同超参数组合）挑选出在当前问题场景下表现最优的模型（model selection）。cv主要分为以下两类：</p>
 <ul>
 <li><p>k折，K-fold</p>
 <p>k折交叉验证是最基本的cv方法，具体方法为，将训练集<strong>随机</strong>等分为k份，取其中一份为验证集评估模型，其余k-1份为训练集训练模型，重复该步骤k次，每次都取一份不同的子集为验证集，最终得到k个不同的模型（不是对一个模型迭代k次）和k个评分，综合这k个模型的表现（平均得分或其他）评估模型在当前问题中的优劣。</p>
@@ -625,29 +610,13 @@
 <li><p>还有一种叫holdout，其实算不上真正的cv，流程图如下</p>
 <img src="/2018/05/02/cross-validation/holdout.png">
 <p>这种方法受数据集分割方式的影响较大，不能较为客观的反映出模型的优劣。</p>
-</li>
-</ul>
-<h3 id="为什么需要cv？"><a href="#为什么需要cv？" class="headerlink" title="为什么需要cv？"></a>为什么需要cv？</h3><p>在训练集（train set）上训练得到的模型表现良好，但在测试集（test set）的预测结果不尽如人意，这就说明模型可能出现了过拟合（overfitting），bias低而variance高，在未知数据上的泛化能力差。</p>
-<p>一个改进方案是，在训练集的基础上进一步划分出新的训练集和验证集（validate set），在新训练集训练模型，在验证集测试模型，不断调整初始模型（超参数等），使得训练得到的模型在验证集上的表现最好，最后放到测试集上得到这个最优模型的评估结果。</p>
-<p>这个方案的问题在于模型的表现依赖于验证集的划分，可能使某些特殊样本被划入验证集，导致模型的表现出现异常（偏好或偏差）。而且训练集划了一部分给验证集后，训练模型能得到的数据就变少了，也会影响训练效果。因为通常来说，训练数据越多，越能反映出数据的真实分布，模型训练的效果就越好，越可能得到无偏估计。</p>
-<p>交叉验证思想应运而生，交叉验证可以充分使用所有的训练数据用于评估模型。</p>
-<h3 id="嵌套交叉验证？"><a href="#嵌套交叉验证？" class="headerlink" title="嵌套交叉验证？"></a>嵌套交叉验证？</h3><p>嵌套交叉验证（Nested Cross Validation）第一次看到是在”Python Machine Learning 2nd Edition”（Sebastian Raschka）这本书中，说要将调参和模型选择结合起来比较好的方式是嵌套交叉验证，其挑选的模型在训练集和测试集上的误差估计几乎没有出入。（原文：the true error of the estimate is almost unbiased relative to the test set when nested cross-validation is used）</p>
-<p>嵌套交叉验证流程图如下（也被称作5*2 cross-validation）：</p>
-<img src="/2018/05/02/cross-validation/nested_cv.png">
-<ul>
-<li>内层交叉验证（innner loop）：用于模型选择，可以进行特征工程处理数据。</li>
-<li>外层交叉验证（outer loop）：用于模型评估，使用所有数据集进行分割，而不仅是训练集，且用Stratified K-Fold保证类别比例不变。外层每一折都使用内层得到的最优参数组合进行训练。</li>
-<li>演示代码：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gs = GridSearchCV(estimator=pipe_svc, ... param_grid=param_grid, ... scoring=<span class="string">'accuracy'</span>, ... cv=<span class="number">2</span>)</span><br><span class="line">scores = cross_val_score(gs, X_train, y_train, ... scoring=<span class="string">'accuracy'</span>, cv=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
-<p>嵌套交叉验证可以看做是GridSearchCV的升级版，普通GridSearchCV训练的模型只在一部分数据上进行测试，而嵌套交叉验证可以使模型在全部数据上进行测试，能更好的说明模型的泛化能力。</p>
-<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="CV的模型是否要先经过训练？"><a href="#CV的模型是否要先经过训练？" class="headerlink" title="CV的模型是否要先经过训练？"></a>CV的模型是否要先经过训练？</h4><p>之前在”Hands-On Machine Learning with Scikit-Learn and TensorFlow” - Chapter3. Classification - Measuring Accuracy Using Cross-Validation中（Page83）看到，笔者在cv的时候使用了之前在全量训练集上训练过的模型作为了cv的初始模型<code>clone_clf = clone(sgd_clf)</code>，个人觉得这里有点问题，从多方查到的资料来看，初始模型是不能预先训练的，至多传入超参数组合。</p>
-<h4 id="CV是否输出模型？"><a href="#CV是否输出模型？" class="headerlink" title="CV是否输出模型？"></a>CV是否输出模型？</h4><p>交叉验证并非用于建立具体模型，而是用于模型选择（model selection），cv中间过程产生的误差最小的模型并不一定是最优的，可能只是表面现象，因为只使用了一部分数据进行训练模型，且验证集的划分也不一定客观。。当选定模型后，需要在<strong>全部训练集上重新训练模型</strong>；为什么不使用cv过程中产生的最优模型？</p>
-<h4 id="CV和网格搜索？"><a href="#CV和网格搜索？" class="headerlink" title="CV和网格搜索？"></a>CV和网格搜索？</h4><p>scikit learn库中的GridSearchCV可以方便地尝试不同的超参数（hyper parameter），得到最优组合。GridSearchCV中的cv参数（默认为3-fold）利用交叉验证为某一超参数组合打出合理的评分。GridSearchCV可以得到最优模型，通过best_estimator_查看，best_params_可以查看最优超参数组合。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://stats.stackexchange.com/questions/52274/how-to-choose-a-predictive-model-after-k-fold-cross-validation" target="_blank" rel="noopener">1. 真正把CV模型的问题讲清楚了的答案</a></p>
-<p><a href="https://www.bilibili.com/video/av10574659/" target="_blank" rel="noopener">2. CV和GridSearchCV视频</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/02/cross-validation/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
